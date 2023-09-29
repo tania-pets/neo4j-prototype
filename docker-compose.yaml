@@ -1,0 +1,29 @@
+version: '3'
+services:
+  neo4j:
+    image: neo4j
+    restart: unless-stopped
+    ports:
+      - 7474:7474
+      - 7687:7687
+    volumes:
+#      - neo4j_data:/data/
+      - ./import:/var/lib/neo4j/import
+      - ./cypher:/cypher
+      - ./scripts:/scripts
+      - ./logs:/logs
+
+    environment:
+      - NEO4J_AUTH=none
+      # Raise memory limits
+      - NEO4J_dbms_memory_pagecache_size=1G
+      - NEO4J_dbms.memory.heap.initial_size=1G
+      - NEO4J_dbms_memory_heap_max__size=1G
+      - NEO4J_dbms.memory.transaction.total.max=1G
+
+
+# Uncomment to retain the data
+  #volumes:
+#  neo4j_data:
+
+
